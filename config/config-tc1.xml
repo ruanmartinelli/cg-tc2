@@ -1,0 +1,8 @@
+<aplicacao>
+	<poligono numeroDeVertices="4">
+		<vertice id="1" coordX="-10" coordY="-10"></vertice>
+		<vertice id="2" coordX="10" coordY="-10"></vertice>
+		<vertice id="3" coordX="10" coordY="10"></vertice>
+		<vertice id="4" coordX="-10" coordY="10"></vertice>
+	</poligono>
+</aplicacao>

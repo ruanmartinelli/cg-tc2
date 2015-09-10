@@ -1,0 +1,5 @@
+<aplicacao>
+	<arquivosDeEntrada>
+		<arquivoDaArena nome="arena" tipo="svg" caminho="../config/arena.svg"></arquivoDaArena>
+	</arquivosDeEntrada>
+</aplicacao>
