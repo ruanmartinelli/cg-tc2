@@ -22,6 +22,8 @@ class Rect{
 		Rect(float x, float y, float width, float height, string fill, float strokeWidth, string stroke, string id);
 		Rect();
 
+		void draw();
+
 		float getX();
 		float getY();
 		float getWidth();

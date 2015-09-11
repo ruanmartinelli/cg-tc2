@@ -8,6 +8,12 @@ using namespace tinyxml2;
 
 Arena::Arena(){}
 
+void Arena::drawArena(){
+	//arena.draw();
+	postoAbastecimento.draw();
+	//jogador.draw();
+}
+
 Rect Arena::getArena(){
 	return this->arena;
 }
@@ -25,11 +31,6 @@ void Arena::readXMLArena(const char* path){
 	XMLNode* svgObjs = doc.FirstChildElement("svg")->FirstChild();
 	while(svgObjs != NULL){
 
-		/*Rect arena;
-		Rect postoAbastecimento;
-		Circle jogador;
-		vector<Circle> inimigos;
-		vector<Circle> objetosResgate;*/
 		XMLElement * obj = svgObjs->ToElement();
 
 		if(strcmp(obj->Attribute("id"),"Arena") == 0){

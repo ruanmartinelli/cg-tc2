@@ -1,4 +1,5 @@
 #include "Rect.h"
+#include <GL/glut.h>
 #include <string>
 
 using namespace std;
@@ -14,6 +15,21 @@ Rect::Rect(float x, float y, float width, float height, string fill, float strok
 	this->strokeWidth = strokeWidth;
 	this->stroke = stroke;
 	this->id = id;
+}
+
+void Rect::draw(){
+	glColor3f (0.6, 0.124, 0.71236723);
+	glBegin(GL_QUADS);
+		// glVertex2f(r.getX(), r.getY());
+		// glVertex2f(r.getX(), r.getHeight());
+		// glVertex2f(r.getWidth(), r.getHeight());
+		// glVertex2f(r.getWidth(), r.getY());
+		glVertex2f(x, y);
+		glVertex2f(x, height);
+		glVertex2f(width, height);
+		glVertex2f(width, y);
+	glEnd();
+
 }
 
 

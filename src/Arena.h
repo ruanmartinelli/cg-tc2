@@ -33,6 +33,7 @@ class Arena{
 		Rect getArena();
 		Rect getPostoAbastecimento();
 		Circle getJogador();
+		void drawArena();
 };
 
 #endif
