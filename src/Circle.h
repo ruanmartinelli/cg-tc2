@@ -19,6 +19,7 @@ class Circle{
 	public:
 		Circle(float cx,float cy,float r,string fill,string id);
 		Circle();
+		void draw();
 		float getCx();
 		float getCy();
 		float getR();

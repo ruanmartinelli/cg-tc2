@@ -9,9 +9,17 @@ using namespace tinyxml2;
 Arena::Arena(){}
 
 void Arena::drawArena(){
-	//arena.draw();
+	arena.draw();
 	postoAbastecimento.draw();
-	//jogador.draw();
+	jogador.draw();
+	for(int i = 0; i < inimigos.size() ; i++){
+		cout << "Drawing enemy!"<< endl;
+		inimigos.at(i).draw();
+	}
+	for(int j = 0; j < objetosResgate.size() ; j++){
+		objetosResgate.at(j).draw();
+	}
+	cout << "Finished Drawing Arena." << endl;
 }
 
 Rect Arena::getArena(){
@@ -20,8 +28,17 @@ Rect Arena::getArena(){
 Rect Arena::getPostoAbastecimento(){
 	return this->postoAbastecimento;
 }
+
 Circle Arena::getJogador(){
 	return this->jogador;
+}
+
+vector<Circle> Arena:: getInimigos(){
+	return this->inimigos;
+}
+
+vector<Circle> Arena::getObjetosResgate(){
+	return this->objetosResgate;
 }
 
 void Arena::readXMLArena(const char* path){
@@ -71,10 +88,10 @@ void Arena::readXMLArena(const char* path){
 													obj->Attribute("id")));
 		}
 
-		if(strcmp(obj->Attribute("id"),"ObjetosRestate") == 0){
+		if(strcmp(obj->Attribute("id"),"ObjetoResgate") == 0){
 			this->objetosResgate.push_back(Circle(	atof(obj->Attribute("cx")), 
 													atof(obj->Attribute("cy")), 
-													atof(obj->Attribute("r")), 
+													atoi(obj->Attribute("r")), 
 													obj->Attribute("fill"), 
 													obj->Attribute("id")));
 		}

@@ -34,6 +34,8 @@ class Arena{
 		Rect getPostoAbastecimento();
 		Circle getJogador();
 		void drawArena();
+		vector<Circle> getInimigos();
+		vector<Circle> getObjetosResgate();
 };
 
 #endif

@@ -1,6 +1,7 @@
-#include "Rect.h"
 #include <GL/glut.h>
 #include <string>
+#include "Rect.h"
+#include "Color.h"
 
 using namespace std;
 
@@ -18,16 +19,35 @@ Rect::Rect(float x, float y, float width, float height, string fill, float strok
 }
 
 void Rect::draw(){
-	glColor3f (0.6, 0.124, 0.71236723);
+	if(fill == "red") glColor3f (red[0],red[1],red[2]);
+	if(fill == "green") glColor3f (green[0],green[1],green[2]);
+	if(fill == "blue") glColor3f (blue[0],blue[1],blue[2]);
+	if(fill == "gray") glColor3f (gray[0],gray[1],gray[2]);
+	if(fill == "white") glColor3f (white[0],white[1],white[2]);
+	if(fill == "black") glColor3f (black[0],black[1],black[2]);
+
 	glBegin(GL_QUADS);
-		// glVertex2f(r.getX(), r.getY());
-		// glVertex2f(r.getX(), r.getHeight());
-		// glVertex2f(r.getWidth(), r.getHeight());
-		// glVertex2f(r.getWidth(), r.getY());
 		glVertex2f(x, y);
-		glVertex2f(x, height);
-		glVertex2f(width, height);
-		glVertex2f(width, y);
+		glVertex2f(x, x+height);
+		glVertex2f(x+width, y+height);
+		glVertex2f(x+width, y);
+	glEnd();
+
+	// TODO: Draw stroke
+
+	if(stroke == "red") glColor3f (red[0],red[1],red[2]);
+	if(stroke == "green") glColor3f (green[0],green[1],green[2]);
+	if(stroke == "blue") glColor3f (blue[0],blue[1],blue[2]);
+	if(stroke == "gray") glColor3f (gray[0],gray[1],gray[2]);
+	if(stroke == "white") glColor3f (white[0],white[1],white[2]);
+	if(stroke == "black") glColor3f (black[0],black[1],black[2]);
+
+	glLineWidth((GLfloat)strokeWidth);
+	glBegin(GL_LINES);
+		glVertex2f(x, y);
+		glVertex2f(x, x+height);
+		glVertex2f(x+width, y+height);
+		glVertex2f(x+width, y);
 	glEnd();
 
 }
