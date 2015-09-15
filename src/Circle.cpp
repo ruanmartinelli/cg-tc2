@@ -24,11 +24,6 @@ void Circle::draw(){
 	if(fill == "white") glColor3f (white[0],white[1],white[2]);
 	if(fill == "black") glColor3f (white[0],white[1],white[2]);
 
-	// cout << "R: " << r << endl;
-	// cout << "CX:" << cx << endl;
-	// cout << "CY:" << cy << endl;
-	// cout << "ID:" << id << endl;
-	// cout << "FILL:" << fill << endl;
 	glBegin(GL_TRIANGLE_FAN); 
 	for(int i = 0; i < 360; i++) 
 	{ 

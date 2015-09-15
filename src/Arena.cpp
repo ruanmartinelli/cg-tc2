@@ -12,14 +12,16 @@ void Arena::drawArena(){
 	arena.draw();
 	postoAbastecimento.draw();
 	jogador.draw();
+
 	for(int i = 0; i < inimigos.size() ; i++){
-		cout << "Drawing enemy!"<< endl;
+		// cout << "Drawing enemy!"<< endl;
 		inimigos.at(i).draw();
 	}
+	
 	for(int j = 0; j < objetosResgate.size() ; j++){
 		objetosResgate.at(j).draw();
 	}
-	cout << "Finished Drawing Arena." << endl;
+	// cout << "Finished Drawing Arena." << endl;
 }
 
 Rect Arena::getArena(){
@@ -39,6 +41,44 @@ vector<Circle> Arena:: getInimigos(){
 
 vector<Circle> Arena::getObjetosResgate(){
 	return this->objetosResgate;
+}
+
+string Arena::verifyClick(int x, int y){
+	string click = "";
+	float 	postoXBegin = getPostoAbastecimento().getX(),
+			postoXEnd = postoXBegin + getPostoAbastecimento().getWidth(),
+			postoYBegin = getPostoAbastecimento().getY(),
+			postoYEnd = postoYBegin + getPostoAbastecimento().getHeight();
+
+	if(x >= postoXBegin && x <= postoXEnd && y >= postoYBegin && y <= postoYEnd){
+		click = getPostoAbastecimento().getId();
+	}
+
+	float jogadorDx = (float(x) - getJogador().getCx())*(float(x) - getJogador().getCx());
+	float jogadorDy = (y - getJogador().getCy())*(y - getJogador().getCy());
+	float jogadorR = getJogador().getR() * getJogador().getR();
+	if(jogadorDx + jogadorDy < jogadorR){
+		click = getJogador().getId();
+	}
+
+	for(int i = 0; i < getInimigos().size(); i++){
+		float inimigoDx = (float(x) - getInimigos().at(i).getCx())*(float(x) - getInimigos().at(i).getCx());
+		float inimigoDy = (y - getInimigos().at(i).getCy())*(y - getInimigos().at(i).getCy());
+		float inimigoR = getInimigos().at(i).getR() * getInimigos().at(i).getR();
+		if(inimigoDx + inimigoDy < inimigoR){
+			click = getInimigos().at(i).getId();
+		}
+	}
+
+	for(int i = 0; i < getObjetosResgate().size(); i++){
+		float objetoResgateDx = (float(x) - getObjetosResgate().at(i).getCx())*(float(x) - getObjetosResgate().at(i).getCx());
+		float objetoResgateDy = (y - getObjetosResgate().at(i).getCy())*(y - getObjetosResgate().at(i).getCy());
+		float objetoResgateR = getObjetosResgate().at(i).getR() * getObjetosResgate().at(i).getR();
+		if(objetoResgateDx + objetoResgateDy < objetoResgateR){
+			click = getObjetosResgate().at(i).getId();
+		}
+	}
+	return click;
 }
 
 void Arena::readXMLArena(const char* path){

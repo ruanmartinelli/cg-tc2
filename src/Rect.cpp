@@ -33,8 +33,6 @@ void Rect::draw(){
 		glVertex2f(x+width, y);
 	glEnd();
 
-	// TODO: Draw stroke
-
 	if(stroke == "red") glColor3f (red[0],red[1],red[2]);
 	if(stroke == "green") glColor3f (green[0],green[1],green[2]);
 	if(stroke == "blue") glColor3f (blue[0],blue[1],blue[2]);
@@ -42,8 +40,9 @@ void Rect::draw(){
 	if(stroke == "white") glColor3f (white[0],white[1],white[2]);
 	if(stroke == "black") glColor3f (black[0],black[1],black[2]);
 
-	glLineWidth((GLfloat)strokeWidth);
-	glBegin(GL_LINES);
+	glLineWidth((GLfloat)strokeWidth); //TODO: needs testing - doesn't seem to work
+
+	glBegin(GL_LINE_LOOP);
 		glVertex2f(x, y);
 		glVertex2f(x, x+height);
 		glVertex2f(x+width, y+height);

@@ -11,11 +11,8 @@ using namespace std;
 
 class XMLConfig{
 	private:
-		// svector<File> files;
 		File arena;
 	public:
-		// vector<File> getFiles();
-		// void addFile(File f);
 		XMLConfig();
 		File getArena();
 		void readXML(const char* path);
