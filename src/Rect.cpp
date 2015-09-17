@@ -40,17 +40,18 @@ void Rect::draw(){
 	if(stroke == "white") glColor3f (white[0],white[1],white[2]);
 	if(stroke == "black") glColor3f (black[0],black[1],black[2]);
 
-	glLineWidth((GLfloat)strokeWidth); //TODO: needs testing - doesn't seem to work
+	// glLineWidth((GLfloat)strokeWidth); //TODO: needs testing
 
 	glBegin(GL_LINE_LOOP);
-		glVertex2f(x, y);
-		glVertex2f(x, x+height);
-		glVertex2f(x+width, y+height);
-		glVertex2f(x+width, y);
+	for(int i = 0 ; i < strokeWidth ; i++){
+		glVertex2f(x+i, y+i);
+		glVertex2f(x+i, x+height-i);
+		glVertex2f(x+width-i, y+height-i);
+		glVertex2f(x+width-i, y+i);
+		glVertex2f(x+i, y+i);
+	}
 	glEnd();
-
 }
-
 
 float Rect::getX(){
 	return this->x;

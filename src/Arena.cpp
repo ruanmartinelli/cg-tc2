@@ -17,7 +17,7 @@ void Arena::drawArena(){
 		// cout << "Drawing enemy!"<< endl;
 		inimigos.at(i).draw();
 	}
-	
+
 	for(int j = 0; j < objetosResgate.size() ; j++){
 		objetosResgate.at(j).draw();
 	}
@@ -44,21 +44,21 @@ vector<Circle> Arena::getObjetosResgate(){
 }
 
 string Arena::verifyClick(int x, int y){
-	string click = "";
+	string click;
 	float 	postoXBegin = getPostoAbastecimento().getX(),
 			postoXEnd = postoXBegin + getPostoAbastecimento().getWidth(),
 			postoYBegin = getPostoAbastecimento().getY(),
 			postoYEnd = postoYBegin + getPostoAbastecimento().getHeight();
 
 	if(x >= postoXBegin && x <= postoXEnd && y >= postoYBegin && y <= postoYEnd){
-		click = getPostoAbastecimento().getId();
+		click = getPostoAbastecimento().getId() + "\n" + click ;
 	}
 
 	float jogadorDx = (float(x) - getJogador().getCx())*(float(x) - getJogador().getCx());
 	float jogadorDy = (y - getJogador().getCy())*(y - getJogador().getCy());
 	float jogadorR = getJogador().getR() * getJogador().getR();
 	if(jogadorDx + jogadorDy < jogadorR){
-		click = getJogador().getId();
+		click =  getJogador().getId() + "\n" + click;
 	}
 
 	for(int i = 0; i < getInimigos().size(); i++){
@@ -66,7 +66,7 @@ string Arena::verifyClick(int x, int y){
 		float inimigoDy = (y - getInimigos().at(i).getCy())*(y - getInimigos().at(i).getCy());
 		float inimigoR = getInimigos().at(i).getR() * getInimigos().at(i).getR();
 		if(inimigoDx + inimigoDy < inimigoR){
-			click = getInimigos().at(i).getId();
+			click = getInimigos().at(i).getId() + "\n" + click;
 		}
 	}
 
@@ -75,7 +75,7 @@ string Arena::verifyClick(int x, int y){
 		float objetoResgateDy = (y - getObjetosResgate().at(i).getCy())*(y - getObjetosResgate().at(i).getCy());
 		float objetoResgateR = getObjetosResgate().at(i).getR() * getObjetosResgate().at(i).getR();
 		if(objetoResgateDx + objetoResgateDy < objetoResgateR){
-			click = getObjetosResgate().at(i).getId();
+			click = getObjetosResgate().at(i).getId() + "\n" + click;
 		}
 	}
 	return click;

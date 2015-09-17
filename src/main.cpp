@@ -6,7 +6,6 @@
 #include <math.h>
 #include <cstring>
 #include "XMLConfig.h"
-// #include "File.h"
 #include "Arena.h"
 
 #define ARENAX arena.getArena().getWidth()
@@ -34,8 +33,8 @@ void display(void){
 void mouse(int button, int state, int x, int y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		string message = arena.verifyClick(x, y);
-
-		if(message != "") cout << message << endl; 
+		//cout << x << ","<< y<< endl;
+		if(message != "") cout << message; 
 	}
 }
 
@@ -47,11 +46,11 @@ int main(int argc, char* argv[]){
 		cout << "Running at default path './config/config.xml'..." << endl;
 		strcpy(path, "../config/config.xml");
 	}else{
+		strcpy(argv[1],"config.xml");
 		strcpy(path, argv[1]);
 	}
 
 	config.readXML(path);
-
 	arena.readXMLArena(config.getArena().getPath().c_str());
 
 	glutInit 				(&argc, argv);
