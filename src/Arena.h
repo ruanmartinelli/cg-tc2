@@ -7,6 +7,7 @@
 #include <string>
 #include "Rect.h"
 #include "Circle.h"
+#include "Helicopter.h"
 
 using namespace std;
 
@@ -17,6 +18,9 @@ class Arena{
 		Circle jogador;
 		vector<Circle> inimigos;
 		vector<Circle> objetosResgate;
+
+		// TC3
+		Helicopter jogadorHelicopter;
 	public:
 		Arena();
 		void readXMLArena(const char* path);
@@ -27,6 +31,8 @@ class Arena{
 		vector<Circle> getInimigos();
 		vector<Circle> getObjetosResgate();
 		string verifyClick(int x, int y);
+		Helicopter getJogadorHelicopter();
+		void setJogadorHelicopter(Helicopter h);
 };
 
 #endif

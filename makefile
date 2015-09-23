@@ -8,4 +8,4 @@ clean:
 	make clean
 run:
 	cd src ; \
-	make run ARGS="../config/"
+	make run

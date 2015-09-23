@@ -7,21 +7,22 @@ compile:
 	g++ -c Circle.cpp
 	g++ -c Rect.cpp
 	g++ -c Color.cpp
+	g++ -c Helicopter.cpp
 	g++ -c ../include/tinyxml2/tinyxml2.cpp
-	g++ -otrabalhocg main.cpp XMLConfig.o File.o Rect.o Circle.o tinyxml2.o Arena.o Color.o -lGL -lGLU -lglut -lm
+	g++ -otrabalhocg main.cpp XMLConfig.o File.o Rect.o Circle.o tinyxml2.o Arena.o Color.o Helicopter.o -lGL -lGLU -lglut -lm
 	@echo 'Compiling done.'
-	@echo 'Type "make run to run on default path.'
+	@echo 'Type "make run" to run on default path.'
+	@echo 'Executable "trabalhocg" is on src folder.'
 
 run: 
-	#path to config.xml goes at the end of next line
-	./trabalhocg 
+	./trabalhocg #insert path to config.xml here
 
 clean:
 	find . -name '*~' -exec rm {} \; 
-	rm trabalhocg
 	rm *.o
+	rm trabalhocg
 
 clearsc:
 	clear
 
-dev: compile run
+dev: clearsc compile run

@@ -7,6 +7,7 @@
 #include <cstring>
 #include "XMLConfig.h"
 #include "Arena.h"
+#include "Helicopter.h"
 
 #define ARENAX arena.getArena().getWidth()
 #define ARENAY arena.getArena().getHeight()
@@ -33,7 +34,6 @@ void display(void){
 void mouse(int button, int state, int x, int y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		string message = arena.verifyClick(x, y);
-		//cout << x << ","<< y<< endl;
 		if(message != "") cout << message; 
 	}
 }
@@ -41,17 +41,17 @@ void mouse(int button, int state, int x, int y){
 int main(int argc, char* argv[]){
 
 	char path[255];
-
 	if(argc != 2){
 		cout << "Running at default path './config/config.xml'..." << endl;
 		strcpy(path, "../config/config.xml");
 	}else{
-		strcpy(argv[1],"config.xml");
 		strcpy(path, argv[1]);
+		strcat(path, "config.xml");
 	}
 
 	config.readXML(path);
 	arena.readXMLArena(config.getArena().getPath().c_str());
+	arena.setJogadorHelicopter(config.readHelicopterConfig(path));
 
 	glutInit 				(&argc, argv);
 	glutInitDisplayMode 	(GLUT_DOUBLE | GLUT_RGB);

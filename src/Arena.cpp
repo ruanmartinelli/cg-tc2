@@ -2,6 +2,7 @@
 #include <vector>
 #include "Arena.h"
 #include "../include/tinyxml2/tinyxml2.h"
+#include "Helicopter.h"
 
 using namespace std;
 using namespace tinyxml2;
@@ -11,17 +12,24 @@ Arena::Arena(){}
 void Arena::drawArena(){
 	arena.draw();
 	postoAbastecimento.draw();
-	jogador.draw();
+	// jogador.draw();
+	jogadorHelicopter.drawHelicopter();
 
 	for(int i = 0; i < inimigos.size() ; i++){
-		// cout << "Drawing enemy!"<< endl;
-		inimigos.at(i).draw();
+		// inimigos.at(i).draw();
 	}
 
 	for(int j = 0; j < objetosResgate.size() ; j++){
-		objetosResgate.at(j).draw();
+		// objetosResgate.at(j).draw();
 	}
-	// cout << "Finished Drawing Arena." << endl;
+}
+
+Helicopter Arena::getJogadorHelicopter(){
+	return this->jogadorHelicopter;
+}
+
+void Arena::setJogadorHelicopter(Helicopter h){
+	this->jogadorHelicopter = h;
 }
 
 Rect Arena::getArena(){

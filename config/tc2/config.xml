@@ -2,5 +2,4 @@
 	<arquivosDeEntrada>
 		<arquivoDaArena nome="arena" tipo="svg" caminho="../config/arena.svg"></arquivoDaArena>
 	</arquivosDeEntrada>
-	<helicoptero velTiro="0.2" velHelicoptero="0.1"></helicoptero>
 </aplicacao>
