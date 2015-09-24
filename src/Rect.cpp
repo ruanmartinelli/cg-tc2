@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 #include <string>
 #include "Rect.h"
-#include "Color.h"
+#include "Utils.h"
 
 using namespace std;
 

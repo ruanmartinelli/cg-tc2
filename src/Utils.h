@@ -1,11 +1,10 @@
-#ifndef COLOR_H
-#define COLOR_H
+#ifndef UTILS_H
+#define UTILS_H
 
 #include <iostream>
 #include <vector>
 #include <algorithm> 
 #include <string>
-
 using namespace std;
 
 extern const float red[];
@@ -15,5 +14,10 @@ extern const float gray[];
 extern const float white[];
 extern const float black[];
 
+extern int keys[256];
+
+void init (float arenaX, float arenaY);
+void setKeyUp(unsigned char key, int x, int j);
+void setKeyDown(unsigned char key, int x, int j);
 
 #endif

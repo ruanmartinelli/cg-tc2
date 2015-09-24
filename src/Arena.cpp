@@ -13,7 +13,7 @@ void Arena::drawArena(){
 	arena.draw();
 	postoAbastecimento.draw();
 	// jogador.draw();
-	jogadorHelicopter.drawHelicopter();
+	// jogadorHelicopter.drawHelicopter();
 
 	for(int i = 0; i < inimigos.size() ; i++){
 		// inimigos.at(i).draw();
@@ -24,13 +24,13 @@ void Arena::drawArena(){
 	}
 }
 
-Helicopter Arena::getJogadorHelicopter(){
-	return this->jogadorHelicopter;
-}
+// Helicopter Arena::getJogadorHelicopter(){
+// 	return this->jogadorHelicopter;
+// }
 
-void Arena::setJogadorHelicopter(Helicopter h){
-	this->jogadorHelicopter = h;
-}
+// void Arena::setJogadorHelicopter(Helicopter h){
+// 	this->jogadorHelicopter = h;
+// }
 
 Rect Arena::getArena(){
 	return this->arena;

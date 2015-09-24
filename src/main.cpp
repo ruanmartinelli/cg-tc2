@@ -8,6 +8,7 @@
 #include "XMLConfig.h"
 #include "Arena.h"
 #include "Helicopter.h"
+#include "Utils.h"
 
 #define ARENAX arena.getArena().getWidth()
 #define ARENAY arena.getArena().getHeight()
@@ -16,17 +17,14 @@ using namespace std;
 
 Arena arena;
 XMLConfig config;
-
-void init (void){
-	glClearColor (0.0, 0.0, 0.0, 0.0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, ARENAX, ARENAY, 0.0, -1.0, 1.0); 
-}
+Helicopter player;
 
 void display(void){
 	glClear (GL_COLOR_BUFFER_BIT);
 	arena.drawArena();
+	// arena.getJogadorHelicopter().drawHelicopter();
+	player.drawHelicopter();
+	glEnd();
 	glutSwapBuffers();
 }
 
@@ -36,6 +34,13 @@ void mouse(int button, int state, int x, int y){
 		string message = arena.verifyClick(x, y);
 		if(message != "") cout << message; 
 	}
+}
+void idle(){
+	if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-1.0); // arena.getJogadorHelicopter().moveX(-100.0); //robo.MoveInX(-1.0);
+	if(keys['d'] == 1 || keys['D'] == 1) player.moveX(1.0);  //robo.MoveInX(1.0);
+	if(keys['w'] == 1 || keys['W'] == 1) player.moveY(-1.0); //robo.MoveInY(1.0);
+	if(keys['s'] == 1 || keys['S'] == 1) player.moveY(1.0); //robo.MoveInY(-1.0);
+	glutPostRedisplay();
 }
 
 int main(int argc, char* argv[]){
@@ -48,19 +53,23 @@ int main(int argc, char* argv[]){
 		strcpy(path, argv[1]);
 		strcat(path, "config.xml");
 	}
-
 	config.readXML(path);
-	arena.readXMLArena(config.getArena().getPath().c_str());
-	arena.setJogadorHelicopter(config.readHelicopterConfig(path));
+	arena.readXMLArena((config.getArena().getPath() + config.getArena().getName() + "." + config.getArena().getExtension()).c_str());
+	// arena.setJogadorHelicopter(config.readHelicopterConfig(path));
+	player = config.readHelicopterConfig(path);
+
 
 	glutInit 				(&argc, argv);
 	glutInitDisplayMode 	(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize 		(ARENAX,ARENAY);
 	glutInitWindowPosition 	(0, 0);
 	glutCreateWindow 	("Arena");
-	init 				();
+	init 				(ARENAX, ARENAY);
 	glutDisplayFunc		(display);
 	glutMouseFunc		(mouse);
+	glutIdleFunc		(idle);
+	glutKeyboardFunc 	(setKeyDown);
+	glutKeyboardUpFunc 	(setKeyUp);
 	glutMainLoop		();
 
 }

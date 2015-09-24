@@ -39,13 +39,12 @@ void XMLConfig::readXML(const char* path){
 }
 
 Helicopter XMLConfig::readHelicopterConfig(const char * path){
-	cout << "ENTREI" << endl;
 	XMLDocument doc;	
 
 	doc.LoadFile(path);
 
 	XMLElement* helicoptero = doc.FirstChildElement("aplicacao")->FirstChildElement("helicoptero");
-	cout << helicoptero->Attribute("velTiro")<<endl;
+	// cout << helicoptero->Attribute("velTiro")<<endl;
 	Helicopter h = Helicopter(atof(helicoptero->Attribute("velTiro")), atof(helicoptero->Attribute("velHelicoptero")));
 	return h;
 }

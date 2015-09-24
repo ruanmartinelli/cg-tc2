@@ -2,7 +2,7 @@
 #include <string>
 #include <math.h>
 #include <GL/glut.h>
-#include "Color.h"
+#include "Utils.h"
 
 using namespace std;
 
