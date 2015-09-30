@@ -23,7 +23,7 @@ class Rect{
 		Rect();
 
 		void draw();
-
+		void drawTC();
 		float getX();
 		float getY();
 		float getWidth();

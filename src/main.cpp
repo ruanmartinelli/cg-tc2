@@ -18,29 +18,81 @@ using namespace std;
 Arena arena;
 XMLConfig config;
 Helicopter player;
-
+float gx = 0.0, gy = 0.0;
 void display(void){
 	glClear (GL_COLOR_BUFFER_BIT);
-	arena.drawArena();
-	// arena.getJogadorHelicopter().drawHelicopter();
-	player.drawHelicopter();
+		arena.drawArena();
+		player.draw();
 	glEnd();
 	glutSwapBuffers();
 }
 
 
 void mouse(int button, int state, int x, int y){
+	cout << x << endl;
+	if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
+		player.setFlying();
+	}
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
-		string message = arena.verifyClick(x, y);
-		if(message != "") cout << message; 
+		player.shoot(x, y);
 	}
 }
 void idle(){
-	if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-1.0); // arena.getJogadorHelicopter().moveX(-100.0); //robo.MoveInX(-1.0);
-	if(keys['d'] == 1 || keys['D'] == 1) player.moveX(1.0);  //robo.MoveInX(1.0);
-	if(keys['w'] == 1 || keys['W'] == 1) player.moveY(-1.0); //robo.MoveInY(1.0);
-	if(keys['s'] == 1 || keys['S'] == 1) player.moveY(1.0); //robo.MoveInY(-1.0);
+	if(keys['a'] == 1 || keys['A'] == 1){
+		player.rotate(-5.0); 
+		
+	} 
+	if(keys['d'] == 1 || keys['D'] == 1) player.rotate(5.0);  
+	if(keys['w'] == 1 || keys['W'] == 1){
+		player.moveY(-5.0); 
+
+		if(keys['a'] == 1 || keys['A'] == 1){
+			player.moveX(-5.0);
+		}
+		if(keys['d'] == 1 || keys['D'] == 1){
+			player.moveX(5.0);
+		}
+	} 
+	if(keys['s'] == 1 || keys['S'] == 1){
+		player.moveY(5.0);  
+		if(keys['a'] == 1 || keys['A'] == 1){
+			player.moveX(-5.0);
+		}
+		if(keys['d'] == 1 || keys['D'] == 1){
+			player.moveX(5.0);
+		}
+	} 
+	// if(keys['a'] == 1 || keys['A'] == 1){
+	// 	player.moveX(1.0); 
+		
+	// } 
+	// if(keys['d'] == 1 || keys['D'] == 1) player.moveX(-1.0);  
+	// if(keys['w'] == 1 || keys['W'] == 1){
+	// 	player.moveY(-1.0); 
+	// } 
+	// if(keys['s'] == 1 || keys['S'] == 1){
+	// 	player.moveY(1.0);  
+	// } 
+
+
+
 	glutPostRedisplay();
+}
+
+float mouseX = 0.0;
+float mouseY = 0.0;
+void motion(int x, int y){
+	if(mouseX < x ){
+		player.rotateGun(1.0);
+	}
+	if(mouseX > x ){
+		player.rotateGun(-1.0);
+	}
+	cout << mouseX<<endl;
+	mouseX = x;
+	mouseY = y;
+	//player.rotateGun(1.0);
+	// cout << player.getGun().getStroke() << endl;
 }
 
 int main(int argc, char* argv[]){
@@ -70,6 +122,7 @@ int main(int argc, char* argv[]){
 	glutIdleFunc		(idle);
 	glutKeyboardFunc 	(setKeyDown);
 	glutKeyboardUpFunc 	(setKeyUp);
+	glutPassiveMotionFunc(motion);
 	glutMainLoop		();
 
 }

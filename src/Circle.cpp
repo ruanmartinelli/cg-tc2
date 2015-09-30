@@ -16,6 +16,16 @@ Circle::Circle(float cx, float cy, float r, string fill, string id){
 	this->r = r;
 }
 
+Circle::Circle(float cx,float cy,float r,string fill,string id, float sX, float sY){
+	this->cx = cx;
+	this->cy = cy;
+	this->fill = fill;
+	this->id = id;
+	this->r = r;
+	this->sX = sX;
+	this->sY = sY;
+}
+
 void Circle::draw(){
 	if(fill == "red") glColor3f (red[0],red[1],red[2]);
 	if(fill == "green") glColor3f (green[0],green[1],green[2]);
@@ -39,11 +49,23 @@ void Circle::draw(){
 
 }
 
+void Circle::setCx(float v){
+	cx= v;
+}
+void Circle::setCy(float v){
+	cy = v;
+}
 float Circle::getCx(){
 	return this->cx;
 }
 float Circle::getCy(){
 	return this->cy;
+}
+float Circle::getSx(){
+	return this->sX;
+}
+float Circle::getSy(){
+	return this->sY;
 }
 float Circle::getR(){
 	return this->r;
@@ -53,4 +75,10 @@ string Circle::getFill(){
 }
 string Circle::getId(){
 	return this->id;
+}
+void Circle::incCy(float value){
+	cy += value;
+}
+void Circle::incCx(float value){
+	cx += value;
 }

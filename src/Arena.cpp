@@ -10,8 +10,15 @@ using namespace tinyxml2;
 Arena::Arena(){}
 
 void Arena::drawArena(){
-	arena.draw();
-	postoAbastecimento.draw();
+	glPushMatrix();
+		glTranslatef(400.0, 350.0,0.0);
+		arena.draw();
+		glPopMatrix();
+	glPushMatrix();
+		glTranslatef(postoAbastecimento.getX() + postoAbastecimento.getWidth()/2.0,
+			postoAbastecimento.getY() + postoAbastecimento.getHeight()/2.0,0.0);
+		postoAbastecimento.draw();
+	glPopMatrix();
 	// jogador.draw();
 	// jogadorHelicopter.drawHelicopter();
 
