@@ -8,8 +8,9 @@ compile:
 	g++ -c Rect.cpp
 	g++ -c Utils.cpp
 	g++ -c Helicopter.cpp
+	g++ -c Shot.cpp
 	g++ -c ../include/tinyxml2/tinyxml2.cpp
-	g++ -otrabalhocg main.cpp XMLConfig.o File.o Rect.o Circle.o tinyxml2.o Arena.o Utils.o Helicopter.o -lGL -lGLU -lglut -lm
+	g++ -otrabalhocg main.cpp XMLConfig.o File.o Rect.o Circle.o tinyxml2.o Arena.o Utils.o Helicopter.o Shot.o -lGL -lGLU -lglut -lm
 	@echo 'Compiling done.'
 	@echo 'Type "make run" to run on default path.'
 	@echo 'Executable "trabalhocg" is on src folder.'

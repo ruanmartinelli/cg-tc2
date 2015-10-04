@@ -4,6 +4,7 @@
 // general
 const float initialX = 400.0;
 const float initialY = 350.0;
+
 const float scale = 100.0;
 
 /*// body

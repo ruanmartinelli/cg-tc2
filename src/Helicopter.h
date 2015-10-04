@@ -8,6 +8,7 @@
 #include "Rect.h"
 #include "Circle.h"
 #include <GL/glut.h>
+#include "Shot.h"
 
 
 using namespace std;
@@ -19,7 +20,9 @@ private:
 	float cX, cY;
 	float angleHelice;
 	bool flying;
-	vector<Circle> shots;
+	vector<Shot> shots;
+	float gunX, gunY;
+
 
 	Rect body;
 	Rect gun;
@@ -30,7 +33,6 @@ private:
 public:
 	Helicopter();
 	Helicopter(float velTiro, float velHelicoptero);
-	// void drawHelicopter(float gx, float gy);
 	void draw();
 	void shoot(float x, float y);
 
@@ -40,5 +42,12 @@ public:
 	void rotate(GLfloat value);
 	void rotateGun(float value);
 	void setFlying();
+	float getCurrentAngleGun();
+	float getGunPosY();
+	float getGunPosX();
+	float getAngle();
+
+	void draw_gun();
+	float getVelTiro();
 };
 #endif

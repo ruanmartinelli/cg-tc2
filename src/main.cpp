@@ -18,23 +18,39 @@ using namespace std;
 Arena arena;
 XMLConfig config;
 Helicopter player;
+vector<Shot> playerShots;
+
 float gx = 0.0, gy = 0.0;
 void display(void){
 	glClear (GL_COLOR_BUFFER_BIT);
+		glPushMatrix();
 		arena.drawArena();
 		player.draw();
+				glPopMatrix();
+		
+		//player.draw_gun();
+		glPushMatrix();
+			glTranslatef(cos((player.getAngle() - 90.0) * 3.1415 / 180.0) * 50.0, sin((player.getAngle() - 90.0)* 3.1415 / 180.0) * 50.0, 0.0);
+		for(int i = 0 ; i < playerShots.size() ;  i++){
+			playerShots.at(i).draw();
+		}
+		glPopMatrix();
+
 	glEnd();
 	glutSwapBuffers();
 }
 
 
 void mouse(int button, int state, int x, int y){
-	cout << x << endl;
 	if(button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN){
 		player.setFlying();
 	}
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
-		player.shoot(x, y);
+		playerShots.push_back(Shot(player.getGunPosX(),
+									player.getGunPosY(),
+									player.getCurrentAngleGun(),
+									player.getAngle(),
+									player.getVelTiro()));
 	}
 }
 void idle(){
@@ -62,37 +78,24 @@ void idle(){
 			player.moveX(5.0);
 		}
 	} 
-	// if(keys['a'] == 1 || keys['A'] == 1){
-	// 	player.moveX(1.0); 
-		
-	// } 
-	// if(keys['d'] == 1 || keys['D'] == 1) player.moveX(-1.0);  
-	// if(keys['w'] == 1 || keys['W'] == 1){
-	// 	player.moveY(-1.0); 
-	// } 
-	// if(keys['s'] == 1 || keys['S'] == 1){
-	// 	player.moveY(1.0);  
-	// } 
-
-
 
 	glutPostRedisplay();
 }
 
 float mouseX = 0.0;
 float mouseY = 0.0;
+
 void motion(int x, int y){
+	// player.rotateGun(x, y);
+
 	if(mouseX < x ){
 		player.rotateGun(1.0);
 	}
 	if(mouseX > x ){
 		player.rotateGun(-1.0);
 	}
-	cout << mouseX<<endl;
 	mouseX = x;
 	mouseY = y;
-	//player.rotateGun(1.0);
-	// cout << player.getGun().getStroke() << endl;
 }
 
 int main(int argc, char* argv[]){

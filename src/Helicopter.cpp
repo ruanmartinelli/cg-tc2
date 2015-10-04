@@ -17,33 +17,48 @@ Helicopter::Helicopter(float velTiro, float velHelicoptero){
 	this->velHelicoptero = velHelicoptero;
 	gX = 0.0;
 	gY = 0.0;
-	cX = cY = 200.0;
+	cX = initialX;
+	cY = initialY;
 	angle = 0.0;
 	flying = false;
+}
+
+float Helicopter::getVelTiro(){
+	return this->velTiro;
 }
 
 Rect Helicopter::getGun(){
 }
 
+float Helicopter::getCurrentAngleGun(){
+	return angleGun + angle;
+}
+
+float Helicopter::getGunPosX(){
+	return (cX + gX);
+}
+
+float Helicopter::getGunPosY(){
+	return cY + gY;
+}
+
+float Helicopter::getAngle(){
+	return angle;
+}
+
+
 void Helicopter::moveX(GLfloat value){
-	// this->gX = this->gX + value;
 }
 
 void Helicopter::rotate(GLfloat value){
+	
 	angle += ((value * 360.0) / (2.0 * 3.1415 * 200.0));
-	// angle = angle + value/5;
 }
 
-void Helicopter::rotateGun(float value){
-	if(fmod((angleGun + value),float(360.0)) < float(45.0) && fmod((angleGun + value),float(360.0)) > float(-45.0)){
-		angleGun = angleGun + value*2;
-	}
-}
 
 void Helicopter::moveY(GLfloat value){
 	this->gX += value * cos(( 90 + angle) * 3.1415/180.0);
 	this->gY += value * sin((angle + 90) * 3.1415/180.0);
-	// cY += value;
 }
 
 void Helicopter::setFlying(){
@@ -54,44 +69,41 @@ void Helicopter::setFlying(){
 	}
 }
 
-
-void drawShots(float sX, float sY, vector<Circle> shots){
-		// for(int i = 0; i < shots.size() ; i++){
-			// shots.at(i).setCx(shots.at(i).getCx()+1);
-			// shots.at(i).setCy(shots.at(i).getCy()+1);
-			// float sxTiro = shots.at(i).getSx()/100.0;
-			// float syTiro = shots.at(i).getSy()/100.0;
-
-			// shots.at(i).incCx(1.0*sxTiro);
-			// shots.at(i).incCy(1.0*syTiro);
-
-			// glPushMatrix();
-				// glTranslatef(shots.at(i).getCx(),shots.at(i).getCy(),0.0);
-				// shots.at(i).draw();
-			// glPopMatrix();
-			// cout << "Shot X [" << i << "] = " << shots.at(i).getCx() << endl;
-			// cout << "Shot Y [" << i << "] = " << shots.at(i).getCy() << endl; 
-			// cout << endl;
-		// }
+void Helicopter::rotateGun(float value){
+	if(fmod((angleGun + value),float(360.0)) < float(45.0) && fmod((angleGun + value),float(360.0)) > float(-45.0)){
+		angleGun = angleGun + value;
+	}
 }
 
 void Helicopter::shoot(float x, float y){
-	shots.push_back(Circle(0.0, 0.0, 10.0, "blue", "", x, y));
-	
+	// shots.push_back(Shot(Circle(0.0, 0.0, 10.0, "blue", ""), angleGun));
+	cout << cX + gX << endl;
+
 }
 
-void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, bool flying, float angleGun, vector<Circle> shots){
+void drawGun(float angleGun, float gunx, float guny, float angle){
+		glPushMatrix();
+			glTranslatef(gunx, guny,0.0);
+			glRotatef(angleGun-180,0.0,0.0,1.0);
+			Rect(0.0, 0.0, gunWidth, gunHeight, "red", 1.0, "green","").drawTC();
+		glPopMatrix();
+}
+
+void Helicopter::draw_gun(){
+}
+
+void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, bool flying, float angleGun){
 	if(flying){
 		cX = cX/2.0;
 		cY = cY/2.0;
 	}
 
 	// gun
-	glPushMatrix();
-		glTranslatef(0.0, -bodyHeight/2.0 +9.0,0.0);
-		glRotatef(angleGun-180, 0.0,0.0,1.0);
-		Rect(0.0, 0.0, gunWidth, gunHeight, "red", 1.0, "green","").drawTC();
-	glPopMatrix();
+	// glPushMatrix();
+	// 	glTranslatef(0.0, -bodyHeight/2.0 +9.0,0.0);
+	// 	glRotatef(angleGun-180, 0.0,0.0,1.0);
+	// 	Rect(0.0, 0.0, gunWidth, gunHeight, "red", 1.0, "green","").drawTC();
+	// glPopMatrix();
 	
 	glPushMatrix();
 		glTranslatef(0.0, 0.0,0.0);
@@ -135,66 +147,35 @@ void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, 
 		glTranslatef(0.0 ,0.0 ,0);
 		Circle(0.0, 0.0, raioHeliceBase, "red", "").draw();
 	glPopMatrix();
+}
 
+void updateShots(vector<Shot> shots){
+	
 }
 
 void Helicopter::draw(){
 	if(flying){
 		angleHelice = angleHelice + 10;
 	}
+
+	//helicopter
 	glPushMatrix();
-		// if(!flying) glScalef(1.0/2.0,1.0/2.0,1.0/2.0);
+		if(!flying) glScalef(1.0/2.0,1.0/2.0,1.0/2.0);
 		glTranslatef(cX+gX, cY+gY, 0.0);
 		glRotatef(angle, 0.0,0.0,1.0);
-		drawHelicopter(cX, cY, angle, angleHelice, flying, angleGun, shots);
+		drawGun(angleGun, 0.0, -bodyHeight/2.0 - 5.0, angle); 
+		drawHelicopter(cX, cY, angle, angleHelice, flying, angleGun);
+	glPopMatrix();
+	
+	//gun
+	glPushMatrix();
+		glTranslatef(cX+gX, cY+gY, 0.0);
+		glRotatef(angle, 0.0,0.0,1.0);
 	glPopMatrix();
 
-	// if(shots.size() > 0){
-	// 	drawShots(1.0, 1.0, shots);
-	// }
+	// cout << cY -bodyHeight/2.0 + gY << endl;
+	// cout << angleGun << endl;
+
 }
 
 
-/*void drawHelicopter(GLfloat angleGun, Rect gun, float iX, float iY){
-	// cannon
-	glPushMatrix();
-		glTranslatef(0.0,-bodyHeight/2.0,0);
-		glRotatef(angleGun,0.0,0.0,1.0);
-		gun = Rect(0.0, 0.0, 0.08, 0.6, "black", 1.0, "black", "");
-		gun.draw();
-		cout << gun.getStroke() << endl;
-	glPopMatrix();
-
-	glPushMatrix();
-		body = Rect(body.getX()+xx,  yy+body.getY() ,bodyWidth,bodyHeight, "green", 1.0, "black", "");
-		body.draw();
-
-	glPopMatrix();
-	
-	glPushMatrix();
-		glTranslatef(tailX,tailY,0);
-		Rect(0.0, 0.0, tailWidth, tailHeight, "green", 1.0, "black", "").draw();
-	glPopMatrix();
-	
-	glPushMatrix();
-		glTranslatef(tailRightX,tailRightY,0);
-		Rect(0.0, 0.0, tailRightWidth, tailRightHeight, "red", 1.0, "black", "").draw();
-	glPopMatrix();
-	
-	glPushMatrix();
-		glTranslatef(tailLeftX,tailLeftY,0);
-		Rect(0.0, 0.0, tailLeftWidth, tailLeftHeight, "blue", 1.0, "black", "").draw();
-	glPopMatrix();
-
-}*/
-
-
-/*void Helicopter::draw(float gx, float gy){
-	glPushMatrix();
-		glPushMatrix();
-			glTranslatef(initialX+bodyWidth/2.0, initialY+bodyHeight/2.0, 0.0);
-			glRotatef(angle, 0.0, 0.0, 1.0);
-			drawBody(angleGun, this->gun, this->body, gX, gY);
-		glPopMatrix();
-	glPopMatrix();
-}*/
