@@ -17,12 +17,13 @@ private:
 	float angle;
 	float angleHelicopter;
 	float velTiro;
+	float angleGun;
 public:
 	float x, y;
 	float xClique, yClique;
 	Shot(Circle circ, float x, float y);
 	Shot(Circle circ);
-	Shot(float x, float y, float angle, float angleHelicopter, float velTiro);
+	Shot(float x, float y, float angle, float angleHelicopter, float velTiro, float angleGun);
 	Shot(Circle circ, float angle);
 	float getAngle();
 	Circle getCircle();

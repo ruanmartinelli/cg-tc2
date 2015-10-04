@@ -31,21 +31,33 @@ Rect Helicopter::getGun(){
 }
 
 float Helicopter::getCurrentAngleGun(){
+
 	return angleGun + angle;
 }
 
 float Helicopter::getGunPosX(){
+
 	return (cX + gX);
 }
 
 float Helicopter::getGunPosY(){
+
 	return cY + gY;
 }
 
 float Helicopter::getAngle(){
+
 	return angle;
 }
 
+float Helicopter::getAngleGun(){
+
+	return angleGun;
+}
+
+bool Helicopter::getFlying(){
+	return flying;
+}
 
 void Helicopter::moveX(GLfloat value){
 }
@@ -82,14 +94,11 @@ void Helicopter::shoot(float x, float y){
 }
 
 void drawGun(float angleGun, float gunx, float guny, float angle){
-		glPushMatrix();
-			glTranslatef(gunx, guny,0.0);
-			glRotatef(angleGun-180,0.0,0.0,1.0);
-			Rect(0.0, 0.0, gunWidth, gunHeight, "red", 1.0, "green","").drawTC();
-		glPopMatrix();
-}
-
-void Helicopter::draw_gun(){
+	glPushMatrix();
+		glTranslatef(gunx, guny,0.0);
+		glRotatef(angleGun-180,0.0,0.0,1.0);
+		Rect(0.0, 0.0, gunWidth, gunHeight, "red", 1.0, "green","").drawTC();
+	glPopMatrix();
 }
 
 void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, bool flying, float angleGun){
@@ -149,21 +158,21 @@ void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, 
 	glPopMatrix();
 }
 
-void updateShots(vector<Shot> shots){
-	
-}
-
 void Helicopter::draw(){
 	if(flying){
 		angleHelice = angleHelice + 10;
+		// cX = cX/2.0;
+		// cY = cY/2.0;
+		// gX = gX/2.0;
+		// gY = gY/2.0;
 	}
 
 	//helicopter
 	glPushMatrix();
-		if(!flying) glScalef(1.0/2.0,1.0/2.0,1.0/2.0);
 		glTranslatef(cX+gX, cY+gY, 0.0);
 		glRotatef(angle, 0.0,0.0,1.0);
-		drawGun(angleGun, 0.0, -bodyHeight/2.0 - 5.0, angle); 
+		if(!flying) glScalef(1.0/2.0,1.0/2.0,1.0/2.0);
+		drawGun(angleGun, 0.0, -bodyHeight/2.0 + 5.0, angle); 
 		drawHelicopter(cX, cY, angle, angleHelice, flying, angleGun);
 	glPopMatrix();
 	

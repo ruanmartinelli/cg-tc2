@@ -13,13 +13,14 @@ Shot::Shot(Circle c){
 	this->y = 0.0;
 }
 
-Shot::Shot(float x, float y, float angle, float angleHelicopter, float velTiro){
-	this->circ = Circle(0.0, 0.0, 10.0, "blue", "");
+Shot::Shot(float x, float y, float angle, float angleHelicopter, float velTiro, float angleGun){
+	this->circ = Circle(0.0, 0.0, 3.0, "blue", "");
 	this->velTiro = velTiro;
 	this->x = x;
 	this->y = y;
 	this->angle = angle;
 	this->angleHelicopter = angleHelicopter;
+	this->angleGun = angleGun;
 }
 
 Shot::Shot(Circle c, float ang){
@@ -33,11 +34,15 @@ void Shot::draw(){
 	// cout << angle << endl;
 	this->x+= cos((angle -90.0)* 3.1415 / 180.0) * velTiro * 25;
 	this->y+= sin((angle -90.0)* 3.1415 / 180.0) * velTiro * 25;
+
+	// cos((player.getAngle() - 90.0) * 3.1415 / 180.0) * 50.0
+
+
 	glPushMatrix();
-		// glTranslatef(0.0,50.0,0.0);
+		glTranslatef(cos((angleHelicopter - 90.0) * 3.1415 / 180.0) * 50.0, sin((angle-angleGun - 90.0) * 3.1415 / 180.0) * 50.0,0.0);
 		glPushMatrix();
 			glTranslatef(this->x, this->y, 0.0);
-			Circle(0.0, 0.0, 10.0, "blue", "").draw();
+			Circle(0.0, 0.0, 3.0, "blue", "").draw();
 		glPopMatrix();
 	glPopMatrix();
 }

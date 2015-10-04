@@ -46,6 +46,8 @@ public:
 	float getGunPosY();
 	float getGunPosX();
 	float getAngle();
+	float getAngleGun();
+	bool getFlying();
 
 	void draw_gun();
 	float getVelTiro();
