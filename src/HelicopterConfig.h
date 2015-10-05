@@ -2,8 +2,8 @@
 #define HELICOPTERCONFIG_H
 
 // general
-const float initialX = 400.0;
-const float initialY = 350.0;
+const float initialX = 100.0;
+const float initialY = 100.0;
 
 const float scale = 60.0;
 
