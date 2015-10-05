@@ -22,7 +22,7 @@ private:
 	bool flying;
 	vector<Shot> shots;
 	float gunX, gunY;
-
+	float velHelice;
 
 	Rect body;
 	Rect gun;
@@ -34,8 +34,8 @@ public:
 	Helicopter();
 	Helicopter(float velTiro, float velHelicoptero);
 	void draw();
-	void shoot(float x, float y);
 
+	void moveHelice(float value);
 	Rect getGun();
 	void moveX(GLfloat value);
 	void moveY(GLfloat value);
@@ -48,6 +48,7 @@ public:
 	float getAngle();
 	float getAngleGun();
 	bool getFlying();
+	float getVelHelicoptero();
 
 	void draw_gun();
 	float getVelTiro();

@@ -13,6 +13,7 @@ extern const float blue[];
 extern const float gray[];
 extern const float white[];
 extern const float black[];
+extern const float darkred[];
 
 extern int keys[256];
 

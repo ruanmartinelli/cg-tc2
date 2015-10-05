@@ -24,7 +24,7 @@ void Rect::draw(){
 	if(fill == "blue") glColor3f (blue[0],blue[1],blue[2]);
 	if(fill == "gray") glColor3f (gray[0],gray[1],gray[2]);
 	if(fill == "white") glColor3f (white[0],white[1],white[2]);
-	if(fill == "black") glColor3f (black[0],black[1],black[2]);
+	if(fill == "darkred") glColor3f (darkred[0],darkred[1],darkred[2]);
 
 	/*glVertex2f(-width/2.0, 0.0);
 				glVertex2f(-width/2.0, height);
@@ -64,6 +64,7 @@ void Rect::drawTC(){
 	if(fill == "gray") glColor3f (gray[0],gray[1],gray[2]);
 	if(fill == "white") glColor3f (white[0],white[1],white[2]);
 	if(fill == "black") glColor3f (black[0],black[1],black[2]);
+	if(fill == "darkred") glColor3f (darkred[0],darkred[1],darkred[2]);
 
 	glBegin(GL_QUADS);
 		glVertex2f(-width/2.0, 0.0);

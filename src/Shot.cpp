@@ -1,5 +1,6 @@
 #include "Shot.h"
 #include <math.h>
+#include "HelicopterConfig.h"
 using namespace std;
 
 Shot::Shot(Circle c, float x, float y){
@@ -39,7 +40,7 @@ void Shot::draw(){
 
 
 	glPushMatrix();
-		glTranslatef(cos((angleHelicopter - 90.0) * 3.1415 / 180.0) * 50.0, sin((angle-angleGun - 90.0) * 3.1415 / 180.0) * 50.0,0.0);
+		glTranslatef(cos((angleHelicopter - 90.0) * 3.1415 / 180.0) * (bodyHeight/2.0 - 5), sin((angle-angleGun - 90.0) * 3.1415 / 180.0) * (bodyHeight/2.0 - 5),0.0);
 		glPushMatrix();
 			glTranslatef(this->x, this->y, 0.0);
 			Circle(0.0, 0.0, 3.0, "blue", "").draw();
