@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <string>
 #include "Circle.h"
 #include <GL/glut.h>
@@ -28,5 +28,6 @@ public:
 	float getAngle();
 	Circle getCircle();
 	void draw();
+	void drawEnemyShot(float x, float y);
 };
 #endif

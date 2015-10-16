@@ -16,7 +16,7 @@ File XMLConfig::getArena(){
 }
 
 void XMLConfig::readXML(const char* path){
-	XMLDocument doc;	
+	XMLDocument doc;
 
 	doc.LoadFile(path);
 
@@ -39,12 +39,23 @@ void XMLConfig::readXML(const char* path){
 }
 
 Helicopter XMLConfig::readHelicopterConfig(const char * path){
-	XMLDocument doc;	
-
+	XMLDocument doc;
 	doc.LoadFile(path);
 
 	XMLElement* helicoptero = doc.FirstChildElement("aplicacao")->FirstChildElement("helicoptero");
-	// cout << helicoptero->Attribute("velTiro")<<endl;
-	Helicopter h = Helicopter(atof(helicoptero->Attribute("velTiro")), atof(helicoptero->Attribute("velHelicoptero")));
+	Helicopter h = Helicopter(atof(helicoptero->Attribute("velTiro")),
+								atof(helicoptero->Attribute("velHelicoptero")),
+								atof(helicoptero->Attribute("tempoDeVoo")));
+	return h;
+}
+
+Helicopter XMLConfig::readEnemyHelicopter(const char* path){
+	XMLDocument doc;
+	doc.LoadFile(path);
+	XMLElement* helicoptero = doc.FirstChildElement("aplicacao")->FirstChildElement("helicopteroInimigo");
+	Helicopter h =
+		Helicopter(atof(helicoptero->Attribute("freqTiro")),
+					atof(helicoptero->Attribute("velHelicoptero")));
+	// <helicopteroInimigo freqTiro="0.0001" velHelicoptero="0.1"></helicopteroInimigo>
 	return h;
 }

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <string>
 #include "File.h"
 #include "Helicopter.h"
@@ -14,10 +14,12 @@ class XMLConfig{
 	private:
 		File arena;
 	public:
+
 		XMLConfig();
 		File getArena();
 		void readXML(const char* path);
 		Helicopter readHelicopterConfig(const char * path);
+		Helicopter readEnemyHelicopter(const char* path);
 };
 
 #endif

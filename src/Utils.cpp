@@ -9,6 +9,7 @@ const float gray[] = {0.5,0.5,0.5};
 const float white[] = {1.0,1.0,1.0};
 const float black[] = {0.0,0.0,0.0};
 const float darkred[] = {0.8,0.0,0.0};
+const float darkgreen[] = {0.0,0.8,0.0};
 
 int keys[256];
 
@@ -16,9 +17,8 @@ void init (float arenaX, float arenaY){
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, arenaX, arenaY, 0.0, -1.0, 1.0); 
+	glOrtho(0.0, arenaX, arenaY, 0.0, -1.0, 1.0);
 }
-
 
 void setKeyUp(unsigned char key, int x, int j){
 

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <string>
 
 using namespace std;
@@ -24,6 +24,8 @@ class Rect{
 
 		void draw();
 		void drawTC();
+		void drawGasBar();
+		void drawGasIndicator();
 		float getX();
 		float getY();
 		float getWidth();

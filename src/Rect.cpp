@@ -25,6 +25,7 @@ void Rect::draw(){
 	if(fill == "gray") glColor3f (gray[0],gray[1],gray[2]);
 	if(fill == "white") glColor3f (white[0],white[1],white[2]);
 	if(fill == "darkred") glColor3f (darkred[0],darkred[1],darkred[2]);
+	if(fill == "darkgreen") glColor3f (darkgreen[0],darkgreen[1],darkgreen[2]);
 
 	/*glVertex2f(-width/2.0, 0.0);
 				glVertex2f(-width/2.0, height);
@@ -65,6 +66,7 @@ void Rect::drawTC(){
 	if(fill == "white") glColor3f (white[0],white[1],white[2]);
 	if(fill == "black") glColor3f (black[0],black[1],black[2]);
 	if(fill == "darkred") glColor3f (darkred[0],darkred[1],darkred[2]);
+	if(fill == "darkgreen") glColor3f (darkgreen[0],darkgreen[1],darkgreen[2]);
 
 	glBegin(GL_QUADS);
 		glVertex2f(-width/2.0, 0.0);
@@ -95,6 +97,42 @@ void Rect::drawTC(){
 		// glVertex2f(x+i, y+i);
 	}
 	glEnd();
+}
+
+void Rect::drawGasBar(){
+	//cout << value << endl;
+
+	glColor3f (red[0],red[1],red[2]);
+	glBegin(GL_QUADS);
+		glVertex2f(-width/2.0, 0.0);
+		glColor3f (green[0],green[1],green[2]);
+		glVertex2f(-width/2.0, height);
+		glVertex2f(width/2.0, height);
+		glColor3f (red[0],red[1],red[2]);
+		glVertex2f(width/2.0, 0.0);
+	glEnd();
+
+	glColor3f (black[0],black[1],black[2]);
+	glBegin(GL_LINE_LOOP);
+	for(int i = 0 ; i < strokeWidth ; i++){
+		glVertex2f(-width/2.0+i, 0.0+i);
+		glVertex2f(-width/2.0+i, height-i);
+		glVertex2f(width/2.0-i, height-i);
+		glVertex2f(width/2.0-i, 0.0+i);
+		glVertex2f(-width/2.0+i, 0.0+i);
+	}
+	glEnd();
+
+}
+
+void Rect::drawGasIndicator(){
+	glColor3f (black[0],black[1],black[2]);
+	glBegin(GL_QUADS);
+	glVertex2f(-width/2.0, 0.0);
+	glVertex2f(-width/2.0, height);
+	glVertex2f(width/2.0, height);
+	glVertex2f(width/2.0, 0.0);
+glEnd();
 }
 
 float Rect::getX(){

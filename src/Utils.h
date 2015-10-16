@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <string>
+#include "Helicopter.h"
 using namespace std;
 
 extern const float red[];
@@ -14,6 +15,7 @@ extern const float gray[];
 extern const float white[];
 extern const float black[];
 extern const float darkred[];
+extern const float darkgreen[];
 
 extern int keys[256];
 

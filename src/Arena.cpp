@@ -9,11 +9,12 @@ using namespace tinyxml2;
 
 Arena::Arena(){}
 
-void Arena::drawArena(){
+void Arena::drawArena(float x, float y){
 	glPushMatrix();
-		glTranslatef(400.0, 350.0,0.0);
+		glTranslatef(x/2.0, y/2.0,0.0);
+		// arena
 		arena.draw();
-		glPopMatrix();
+	glPopMatrix();
 	glPushMatrix();
 		glTranslatef(postoAbastecimento.getX() + postoAbastecimento.getWidth()/2.0,
 			postoAbastecimento.getY() + postoAbastecimento.getHeight()/2.0,0.0);
@@ -27,21 +28,14 @@ void Arena::drawArena(){
 	}
 
 	for(int j = 0; j < objetosResgate.size() ; j++){
-		// objetosResgate.at(j).draw();
+		 objetosResgate.at(j).draw();
 	}
 }
-
-// Helicopter Arena::getJogadorHelicopter(){
-// 	return this->jogadorHelicopter;
-// }
-
-// void Arena::setJogadorHelicopter(Helicopter h){
-// 	this->jogadorHelicopter = h;
-// }
 
 Rect Arena::getArena(){
 	return this->arena;
 }
+
 Rect Arena::getPostoAbastecimento(){
 	return this->postoAbastecimento;
 }
@@ -128,30 +122,29 @@ void Arena::readXMLArena(const char* path){
 		}
 
 		if(strcmp(obj->Attribute("id"),"Jogador") == 0){
-			this->jogador = Circle(	atof(obj->Attribute("cx")), 
-									atof(obj->Attribute("cy")), 
-									atof(obj->Attribute("r")), 
-									obj->Attribute("fill"), 
+			this->jogador = Circle(	atof(obj->Attribute("cx")),
+									atof(obj->Attribute("cy")),
+									atof(obj->Attribute("r")),
+									obj->Attribute("fill"),
 									obj->Attribute("id"));
 		}
 
 		if(strcmp(obj->Attribute("id"),"Inimigo") == 0){
-			this->inimigos.push_back(Circle(	atof(obj->Attribute("cx")), 
-													atof(obj->Attribute("cy")), 
-													atof(obj->Attribute("r")), 
-													obj->Attribute("fill"), 
+			this->inimigos.push_back(Circle(	atof(obj->Attribute("cx")),
+													atof(obj->Attribute("cy")),
+													atof(obj->Attribute("r")),
+													obj->Attribute("fill"),
 													obj->Attribute("id")));
 		}
 
 		if(strcmp(obj->Attribute("id"),"ObjetoResgate") == 0){
-			this->objetosResgate.push_back(Circle(	atof(obj->Attribute("cx")), 
-													atof(obj->Attribute("cy")), 
-													atoi(obj->Attribute("r")), 
-													obj->Attribute("fill"), 
+			this->objetosResgate.push_back(Circle(	atof(obj->Attribute("cx")),
+													atof(obj->Attribute("cy")),
+													atoi(obj->Attribute("r")),
+													obj->Attribute("fill"),
 													obj->Attribute("id")));
 		}
 
 		svgObjs = svgObjs->NextSibling();
 	}
 }
-

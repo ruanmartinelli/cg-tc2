@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include <string>
 #include "Rect.h"
 #include "Circle.h"
@@ -25,7 +25,7 @@ class Arena{
 		Rect getArena();
 		Rect getPostoAbastecimento();
 		Circle getJogador();
-		void drawArena();
+		void drawArena(float x, float y);
 		vector<Circle> getInimigos();
 		vector<Circle> getObjetosResgate();
 		string verifyClick(int x, int y);

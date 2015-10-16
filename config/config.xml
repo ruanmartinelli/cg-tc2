@@ -2,5 +2,6 @@
 	<arquivosDeEntrada>
 		<arquivoDaArena nome="arena" tipo="svg" caminho="../config/"></arquivoDaArena>
 	</arquivosDeEntrada>
-	<helicoptero velTiro="0.2" velHelicoptero="0.1"></helicoptero>
+	<helicoptero velTiro="0.2" velHelicoptero="0.1" tempoDeVoo="20"></helicoptero>
+	<helicopteroInimigo freqTiro="0.0001" velHelicoptero="0.1"></helicopteroInimigo>
 </aplicacao>
