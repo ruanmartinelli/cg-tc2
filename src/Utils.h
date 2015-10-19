@@ -22,5 +22,5 @@ extern int keys[256];
 void init (float arenaX, float arenaY);
 void setKeyUp(unsigned char key, int x, int j);
 void setKeyDown(unsigned char key, int x, int j);
-
+bool checkDefeat(Helicopter player, float x, float y);
 #endif

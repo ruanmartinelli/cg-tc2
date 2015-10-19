@@ -63,6 +63,6 @@ public:
 	float getFreqTiro();
 	float getVelTiro();
 	void setAngle(float a);
-
+	int getGas();
 };
 #endif

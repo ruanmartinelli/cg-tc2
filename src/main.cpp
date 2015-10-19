@@ -10,6 +10,7 @@
 #include "Helicopter.h"
 #include "Utils.h"
 
+
 #define ARENAX arena.getArena().getWidth()
 #define ARENAY arena.getArena().getHeight()
 
@@ -21,49 +22,47 @@ Helicopter player;
 vector<Shot> playerShots;
 vector<Shot> enemyShots;
 vector<Helicopter> enemies;
-float gx = 0.0, gy = 0.0;
 
 void moveEnemies(){
 	static GLdouble previousTime = 0;
-	double currentTime, timeDiference;
+	double currentTime, timeDifference;
 
 	currentTime = glutGet(GLUT_ELAPSED_TIME);
-	timeDiference = currentTime - previousTime;
+	timeDifference = currentTime - previousTime;
 	previousTime = currentTime;
 
-	for(int i = 0 ; i < enemies.size(); i ++){
-		enemies.at(i).moveY(enemies.at(i).getVelHelicoptero() * timeDiference * -1);
-		if(rand() % 100 > 97) enemies.at(i).rotate(45);
-	}
+	// for(int i = 0 ; i < enemies.size(); i ++){
+	// 	enemies.at(i).moveY(enemies.at(i).getVelHelicoptero() * timeDifference * -1);
+	// 	if(rand() % 100 > 97) enemies.at(i).rotate(45);
+	// }
 }
 
 void display(void){
-	cout << player.getGunPosX() <<endl;
-	glClear (GL_COLOR_BUFFER_BIT);
 
+	glClear (GL_COLOR_BUFFER_BIT);
 		// arena and helicopter
 		glPushMatrix();
 			arena.drawArena(ARENAX, ARENAY);
 		glPopMatrix();
 
-		// gun
-		glPushMatrix();
-			for(int i = 0 ; i < playerShots.size() ; i++) playerShots.at(i).draw();
-			if(enemyShots.size()>0){
-				for(int i = 0 ; i < enemyShots.size() ; i++) enemyShots.at(i).draw();
-			}
-		glPopMatrix();
-		glPushMatrix();
-			player.draw();
-		glPopMatrix();
-		glPushMatrix();
+		if(!checkDefeat(player, ARENAX/2.0,ARENAY/2.0)){
+			// shots
+			glPushMatrix();
+				for(int i = 0 ; i < playerShots.size() ; i++) playerShots.at(i).draw();
+				if(enemyShots.size() > 0){
+					for(int i = 0 ; i < enemyShots.size() ; i++) enemyShots.at(i).draw();
+				}
+			glPopMatrix();
 
-			enemies.at(0).draw();
-			enemies.at(1).draw();
-			enemies.at(2).draw();
-			//moveEnemies();
-
-		glPopMatrix();
+			glPushMatrix();
+				player.draw();
+			glPopMatrix();
+			glPushMatrix();
+				enemies.at(0).draw();
+				enemies.at(1).draw();
+				enemies.at(2).draw();
+			glPopMatrix();
+		}
 
 	glEnd();
 	glutSwapBuffers();
@@ -86,29 +85,51 @@ void mouse(int button, int state, int x, int y){
 void idle(){
 	static GLdouble previousTime = 0;
     GLdouble currentTime;
-    GLdouble timeDiference;
+    GLdouble timeDifference;
 
     currentTime = glutGet(GLUT_ELAPSED_TIME);
-    timeDiference = currentTime - previousTime;
+    timeDifference = currentTime - previousTime;
     previousTime = currentTime;
 
-	if(keys['a'] == 1 || keys['A'] == 1) player.rotate(-player.getVelHelicoptero() * timeDiference);
-	if(keys['d'] == 1 || keys['D'] == 1) player.rotate(player.getVelHelicoptero() * timeDiference);
+	if(keys['a'] == 1 || keys['A'] == 1) player.rotate(-player.getVelHelicoptero() * timeDifference);
+	if(keys['d'] == 1 || keys['D'] == 1) player.rotate(player.getVelHelicoptero() * timeDifference);
 	if(keys['w'] == 1 || keys['W'] == 1){
-		player.moveY(-player.getVelHelicoptero() * timeDiference);
-		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDiference);
-		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDiference);
+		player.moveY(-player.getVelHelicoptero() * timeDifference);
+		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDifference);
+		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDifference);
 	}
 	if(keys['s'] == 1 || keys['S'] == 1){
-		player.moveY(player.getVelHelicoptero() * timeDiference);
-		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDiference);
-		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDiference);
+		player.moveY(player.getVelHelicoptero() * timeDifference);
+		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDifference);
+		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDifference);
 
 	}
-	if(keys['+'] == 1) player.moveHelice(0.1 * timeDiference);
-	if(keys['-'] == 1) player.moveHelice(-0.1 * timeDiference);
+	if(keys['+'] == 1) player.moveHelice(0.1 * timeDifference);
+	if(keys['-'] == 1) player.moveHelice(-0.1 * timeDifference);
 
+	// enemy movement
+	enemies.at(0).moveY(enemies.at(0).getVelHelicoptero() * timeDifference * -1);
+	enemies.at(1).moveY(enemies.at(1).getVelHelicoptero() * timeDifference * -1);
+	enemies.at(2).moveY(enemies.at(2).getVelHelicoptero() * timeDifference * -1);
 	glutPostRedisplay();
+}
+
+void timerEnemyMovement(int value){
+	int nextMove = (4 + rand() % (int)(6 - 4 + 1)) * 1000;
+	int directionMove = pow(-1,(1 + rand() % (int)(2 - 1 + 1)));
+	static GLdouble previousTime = 0;
+	double currentTime, timeDifference;
+	currentTime = glutGet(GLUT_ELAPSED_TIME);
+	timeDifference = currentTime - previousTime;
+	previousTime = currentTime;
+
+	// cout << directionMove << endl;
+	// cout << nextMove << endl;
+
+	enemies.at(0).rotate(45 * timeDifference * directionMove);
+	enemies.at(1).rotate(33 * timeDifference * directionMove);
+	enemies.at(2).rotate(60 * timeDifference * directionMove);
+	glutTimerFunc(nextMove,timerEnemyMovement,0);
 }
 
 void timerGasBar(int value){
@@ -124,12 +145,11 @@ void timerEnemyShooting(int value){
 		// enemies.at(i).setAngle(-player.getAngle());
 		enemyShots.push_back(Shot(enemies.at(i).getGunPosX(),
 									enemies.at(i).getGunPosY(),
-									enemies.at(i).getCurrentAngleGun(),
+									enemies.at(i).getAngle(),
 									enemies.at(i).getAngle(),
 									enemies.at(i).getVelTiro(),
 									enemies.at(i).getAngleGun()));
 	}
-	// glutTimerFunc(value,timerEnemyShooting,value);
 	glutTimerFunc(2000,timerEnemyShooting,200);
 
 	glutPostRedisplay();
@@ -137,18 +157,19 @@ void timerEnemyShooting(int value){
 
 float mouseX = 0.0;
 void motion(int x, int y){
+
 	static GLdouble previousTime = 0;
     GLdouble currentTime;
-    GLdouble timeDiference;
+    GLdouble timeDifference;
     currentTime = glutGet(GLUT_ELAPSED_TIME);
-    timeDiference = currentTime - previousTime;
+    timeDifference = currentTime - previousTime;
     previousTime = currentTime;
 
 	if(mouseX < x ){
-		player.rotateGun(timeDiference* 0.1);
+		player.rotateGun(timeDifference* 0.1);
 	}
 	if(mouseX > x ){
-		player.rotateGun(timeDiference* -0.1);
+		player.rotateGun(timeDifference* -0.1);
 	}
 	mouseX = x;
 }
@@ -184,9 +205,12 @@ int main(int argc, char* argv[]){
 	glutIdleFunc		(idle);
 	glutKeyboardFunc 	(setKeyDown);
 	glutKeyboardUpFunc 	(setKeyUp);
+
+	//timers
 	glutTimerFunc((player.getTempoDeVoo() * 1000)/5, timerGasBar, 0);
-	// glutTimerFunc((1/enemies.at(0).getFreqTiro()), timerEnemyShooting, 1/enemies.at(0).getFreqTiro());
+	glutTimerFunc(rand() % (int)(5 - 2 + 1),timerEnemyMovement,0);
 	glutTimerFunc(200,timerEnemyShooting,200);
+	// glutTimerFunc((1/enemies.at(0).getFreqTiro()), timerEnemyShooting, 1/enemies.at(0).getFreqTiro());
 
 	glutPassiveMotionFunc(motion);
 	glutMainLoop		();

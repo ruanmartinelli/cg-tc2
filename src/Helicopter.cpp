@@ -55,6 +55,7 @@ bool Helicopter::getFlying()			{return flying;}
 float Helicopter::getTempoDeVoo()		{return this->tempoDeVoo;}
 void Helicopter::moveX(GLfloat value)	{}
 void Helicopter::setAngle(float a)		{this->angle = a;}
+int Helicopter::getGas()				{return this->gas;};
 void Helicopter::rotate(GLfloat value){
 	angle += value;
 }

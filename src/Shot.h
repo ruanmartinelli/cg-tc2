@@ -12,7 +12,6 @@
 using namespace std;
 
 class Shot{
-private:
 	Circle circ;
 	float angle;
 	float angleHelicopter;

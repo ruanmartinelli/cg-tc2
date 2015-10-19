@@ -20,6 +20,24 @@ void init (float arenaX, float arenaY){
 	glOrtho(0.0, arenaX, arenaY, 0.0, -1.0, 1.0);
 }
 
+// true = victory
+// false = defeat
+bool checkDefeat(Helicopter player, float x, float y){
+	string defeat = "DEFEAT";
+	if(player.getGas() <= 0){
+	// if(player.getGas() >10){
+			glPushMatrix();
+				glTranslatef(x, y, 0.0);
+				glColor3f(0.0, 0.0, 0.0);
+				glScalef(0.5, 0.5, 0.5);
+				glRotatef(180.0, 1.0, 0.0, 0.0);
+				for(int i = 0; i < 6 ; i++) glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN,defeat[i]);
+			glPopMatrix();
+		return true;
+	}
+	return false;
+}
+
 void setKeyUp(unsigned char key, int x, int j){
 
 	switch(key){
