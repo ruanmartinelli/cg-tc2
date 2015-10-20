@@ -1,6 +1,7 @@
 #include "Utils.h"
 #include <string>
 #include <GL/glut.h>
+#include <math.h>
 
 const float red[] = {1.0,0.0,0.0};
 const float blue[] = {0.0,0.0,1.0};
@@ -63,4 +64,39 @@ void setKeyDown(unsigned char key, int x, int j){
 		break;
 	}
 	glutPostRedisplay();
+}
+
+bool onPosto(Helicopter player, Rect posto){
+	if(player.getGunPosX() > posto.getX()
+		&& player.getGunPosX() < (posto.getX() + posto.getWidth())
+		&& player.getGunPosY() > posto.getY()
+		&& player.getGunPosY() < (posto.getY() + posto.getHeight())
+	){
+		// on posto
+		return true;
+	}
+	// left posto
+	return false;
+}
+
+bool checkCollision(float x, float y, float r, float a, float b, float c){
+	float dist = sqrt(pow(x - y, 2) + pow(a - b, 2));
+	bool result;
+	dist <= (r + c) ? result = true : result = false;
+	return result;
+}
+
+bool onArena(Helicopter player, Rect arena, float displacement){
+	float nextMoveX = player.getNextMoveX(displacement) + player.getCx();
+	float nextMoveY = player.getNextMoveY(displacement) + player.getCy();
+	cout << nextMoveX << endl;
+	if(nextMoveX + player.getRadius() > arena.getWidth()
+		|| nextMoveX - player.getRadius() < 0.0
+		|| nextMoveY + player.getRadius() > arena.getHeight()
+		|| nextMoveY - player.getRadius() < 0.0){
+			// left arena
+			return true;
+		}
+	// on arena
+	return false;
 }

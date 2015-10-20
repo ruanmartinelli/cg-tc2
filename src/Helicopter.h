@@ -28,6 +28,7 @@ private:
 	float freqTiro;
 	float arenaX, arenaY; // arena size
 	int gas;
+	float radius;
 
 	Rect body;
 	Rect gun;
@@ -64,5 +65,9 @@ public:
 	float getVelTiro();
 	void setAngle(float a);
 	int getGas();
+	void setGas(float g);
+	float getRadius();
+	float getGx(); float getNextMoveX(float val); float getCx();
+	float getGy(); float getNextMoveY(float val); float getCy();
 };
 #endif

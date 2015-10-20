@@ -31,15 +31,12 @@ void moveEnemies(){
 	timeDifference = currentTime - previousTime;
 	previousTime = currentTime;
 
-	// for(int i = 0 ; i < enemies.size(); i ++){
-	// 	enemies.at(i).moveY(enemies.at(i).getVelHelicoptero() * timeDifference * -1);
-	// 	if(rand() % 100 > 97) enemies.at(i).rotate(45);
-	// }
 }
 
 void display(void){
 
 	glClear (GL_COLOR_BUFFER_BIT);
+
 		// arena and helicopter
 		glPushMatrix();
 			arena.drawArena(ARENAX, ARENAY);
@@ -63,7 +60,6 @@ void display(void){
 				enemies.at(2).draw();
 			glPopMatrix();
 		}
-
 	glEnd();
 	glutSwapBuffers();
 }
@@ -73,6 +69,12 @@ void mouse(int button, int state, int x, int y){
 		player.setFlying();
 	}
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && player.getFlying()){
+		// playerShots.push_back(Shot(player.getGunPosX(),
+		// 							player.getGunPosY(),
+		// 							player.getCurrentAngleGun(),
+		// 							player.getAngle(),
+		// 							player.getVelTiro(),
+		// 							player.getAngleGun()));
 		playerShots.push_back(Shot(player.getGunPosX(),
 									player.getGunPosY(),
 									player.getCurrentAngleGun(),
@@ -91,26 +93,39 @@ void idle(){
     timeDifference = currentTime - previousTime;
     previousTime = currentTime;
 
+	// key control
 	if(keys['a'] == 1 || keys['A'] == 1) player.rotate(-player.getVelHelicoptero() * timeDifference);
 	if(keys['d'] == 1 || keys['D'] == 1) player.rotate(player.getVelHelicoptero() * timeDifference);
 	if(keys['w'] == 1 || keys['W'] == 1){
-		player.moveY(-player.getVelHelicoptero() * timeDifference);
-		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDifference);
-		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDifference);
+		// checks if next position exceeds boudaries
+		if(!onArena(player, arena.getArena(), -player.getVelHelicoptero() * timeDifference))
+			player.moveY(-player.getVelHelicoptero() * timeDifference);
 	}
 	if(keys['s'] == 1 || keys['S'] == 1){
-		player.moveY(player.getVelHelicoptero() * timeDifference);
-		if(keys['a'] == 1 || keys['A'] == 1) player.moveX(-player.getVelHelicoptero() * timeDifference);
-		if(keys['d'] == 1 || keys['D'] == 1) player.moveX(player.getVelHelicoptero() * timeDifference);
-
+		// checks if next position exceeds boudaries
+		if(!onArena(player, arena.getArena(), player.getVelHelicoptero() * timeDifference))
+			player.moveY(player.getVelHelicoptero() * timeDifference);
 	}
 	if(keys['+'] == 1) player.moveHelice(0.1 * timeDifference);
 	if(keys['-'] == 1) player.moveHelice(-0.1 * timeDifference);
 
 	// enemy movement
-	enemies.at(0).moveY(enemies.at(0).getVelHelicoptero() * timeDifference * -1);
-	enemies.at(1).moveY(enemies.at(1).getVelHelicoptero() * timeDifference * -1);
-	enemies.at(2).moveY(enemies.at(2).getVelHelicoptero() * timeDifference * -1);
+	if(!onArena(enemies.at(0), arena.getArena(), -enemies.at(0).getVelHelicoptero() * timeDifference)){
+		enemies.at(0).moveY(enemies.at(0).getVelHelicoptero() * timeDifference * -1);
+	}else{
+		enemies.at(0).rotate(150);
+	}
+	if(!onArena(enemies.at(1), arena.getArena(), -enemies.at(1).getVelHelicoptero() * timeDifference)){
+		enemies.at(1).moveY(enemies.at(1).getVelHelicoptero() * timeDifference * -1);
+	}else{
+		enemies.at(1).rotate(150);
+	}
+	if(!onArena(enemies.at(2), arena.getArena(), -enemies.at(2).getVelHelicoptero() * timeDifference)){
+		enemies.at(2).moveY(enemies.at(2).getVelHelicoptero() * timeDifference * -1);
+	}else{
+		enemies.at(2).rotate(150);
+	}
+
 	glutPostRedisplay();
 }
 
@@ -123,29 +138,33 @@ void timerEnemyMovement(int value){
 	timeDifference = currentTime - previousTime;
 	previousTime = currentTime;
 
-	// cout << directionMove << endl;
-	// cout << nextMove << endl;
-
-	enemies.at(0).rotate(45 * timeDifference * directionMove);
-	enemies.at(1).rotate(33 * timeDifference * directionMove);
+	enemies.at(0).rotate(90 * timeDifference * directionMove);
+	enemies.at(1).rotate(90 * timeDifference * directionMove);
 	enemies.at(2).rotate(60 * timeDifference * directionMove);
 	glutTimerFunc(nextMove,timerEnemyMovement,0);
 }
 
 void timerGasBar(int value){
-	if(player.getFlying()){
+	// on posto
+	if(player.getFlying() && !onPosto(player, arena.getPostoAbastecimento())){
 		player.decGas();
 	}
+
+	// refuels
+	if(onPosto(player, arena.getPostoAbastecimento())){
+		player.setGas(player.getTempoDeVoo());
+	}
+
 	glutTimerFunc((1000),timerGasBar,0);
 	glutPostRedisplay();
 }
 
 void timerEnemyShooting(int value){
 	for(int i = 0 ; i < enemies.size() ; i++){
-		// enemies.at(i).setAngle(-player.getAngle());
+		// TODO not shooting straight
 		enemyShots.push_back(Shot(enemies.at(i).getGunPosX(),
 									enemies.at(i).getGunPosY(),
-									enemies.at(i).getAngle(),
+									enemies.at(i).getCurrentAngleGun(),
 									enemies.at(i).getAngle(),
 									enemies.at(i).getVelTiro(),
 									enemies.at(i).getAngleGun()));
@@ -165,12 +184,8 @@ void motion(int x, int y){
     timeDifference = currentTime - previousTime;
     previousTime = currentTime;
 
-	if(mouseX < x ){
-		player.rotateGun(timeDifference* 0.1);
-	}
-	if(mouseX > x ){
-		player.rotateGun(timeDifference* -0.1);
-	}
+	if(mouseX < x ) player.rotateGun(timeDifference* 0.1);
+	if(mouseX > x )	player.rotateGun(timeDifference* -0.1);
 	mouseX = x;
 }
 
@@ -210,7 +225,6 @@ int main(int argc, char* argv[]){
 	glutTimerFunc((player.getTempoDeVoo() * 1000)/5, timerGasBar, 0);
 	glutTimerFunc(rand() % (int)(5 - 2 + 1),timerEnemyMovement,0);
 	glutTimerFunc(200,timerEnemyShooting,200);
-	// glutTimerFunc((1/enemies.at(0).getFreqTiro()), timerEnemyShooting, 1/enemies.at(0).getFreqTiro());
 
 	glutPassiveMotionFunc(motion);
 	glutMainLoop		();

@@ -22,9 +22,11 @@ Helicopter::Helicopter(float freqTiro, float velHelicoptero){
 	gY 			= 0.0;
 	cX 			= rand() % 800,
 	cY 			= rand() % 600;
-	angle 		= rand() % 360;
+	// angle 		= rand() % 360;
+	angle = 90;
 	flying 		= true;
 	velHelice 	= 10.0;
+	radius 		= bodyWidth;
 }
 
 // player
@@ -41,13 +43,14 @@ Helicopter::Helicopter(float velTiro, float velHelicoptero, float tempoDeVoo){
 	angle 		= 0.0;
 	flying 		= false;
 	velHelice 	= 0.0;
+	radius 		= bodyWidth;
 }
 
 float Helicopter::getFreqTiro()			{return this->freqTiro;}
 float Helicopter::getVelTiro()			{return this->velTiro;}
 float Helicopter::getVelHelicoptero()	{return this->velHelicoptero;}
 float Helicopter::getCurrentAngleGun()	{return angleGun + angle;}
-float Helicopter::getGunPosX()			{return (cX + gX);}
+float Helicopter::getGunPosX()			{return cX + gX;}
 float Helicopter::getGunPosY()			{return cY + gY;}
 float Helicopter::getAngle()			{return angle;}
 float Helicopter::getAngleGun()			{return angleGun;}
@@ -56,6 +59,18 @@ float Helicopter::getTempoDeVoo()		{return this->tempoDeVoo;}
 void Helicopter::moveX(GLfloat value)	{}
 void Helicopter::setAngle(float a)		{this->angle = a;}
 int Helicopter::getGas()				{return this->gas;};
+void Helicopter::setGas(float g)		{this->gas = g;};
+float Helicopter::getRadius()			{return this->radius;};
+float Helicopter::getGx()				{return this->gX;};
+float Helicopter::getCx()				{return this->cX;};
+float Helicopter::getGy()				{return this->gY;};
+float Helicopter::getCy()				{return this->cY;};
+float Helicopter::getNextMoveX( float val ){
+	return this->gX + val * cos(( 90 + angle) * 3.1415/180.0);
+}
+float Helicopter::getNextMoveY( float val ){
+	return this->gY + val * sin(( 90 + angle) * 3.1415/180.0);
+}
 void Helicopter::rotate(GLfloat value){
 	angle += value;
 }
@@ -107,8 +122,6 @@ void drawHelicopter(GLfloat cX, GLfloat cY, GLfloat angle, GLfloat angleHelice, 
 		if(isEnemy) Rect(0.0, 0.0, bodyWidth, bodyHeight, "darkred", 1.0, "black","").draw();
 		if(!isEnemy)Rect(0.0, 0.0, bodyWidth, bodyHeight, "darkgreen", 1.0, "black","").draw();
 	glPopMatrix();
-
-
 	glPushMatrix();
 		glTranslatef(0.0 ,0.0 + bodyHeight,0);
 		if(isEnemy) Rect(0.0, 0.0, tailWidth, tailHeight, "darkred", 1.0, "black", "").draw();
