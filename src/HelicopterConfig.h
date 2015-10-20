@@ -5,7 +5,7 @@
 const float initialX = 100.0;
 const float initialY = 100.0;
 
-const float scale = 60.0;
+const float scale = 40.0;
 
 // body
 const float bodyHeight =scale* 1.0;

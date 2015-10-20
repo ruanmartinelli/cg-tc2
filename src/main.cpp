@@ -109,21 +109,22 @@ void idle(){
 	if(keys['+'] == 1) player.moveHelice(0.1 * timeDifference);
 	if(keys['-'] == 1) player.moveHelice(-0.1 * timeDifference);
 
-	// enemy movement
-	if(!onArena(enemies.at(0), arena.getArena(), -enemies.at(0).getVelHelicoptero() * timeDifference)){
-		enemies.at(0).moveY(enemies.at(0).getVelHelicoptero() * timeDifference * -1);
-	}else{
-		enemies.at(0).rotate(150);
-	}
-	if(!onArena(enemies.at(1), arena.getArena(), -enemies.at(1).getVelHelicoptero() * timeDifference)){
-		enemies.at(1).moveY(enemies.at(1).getVelHelicoptero() * timeDifference * -1);
-	}else{
-		enemies.at(1).rotate(150);
-	}
-	if(!onArena(enemies.at(2), arena.getArena(), -enemies.at(2).getVelHelicoptero() * timeDifference)){
-		enemies.at(2).moveY(enemies.at(2).getVelHelicoptero() * timeDifference * -1);
-	}else{
-		enemies.at(2).rotate(150);
+	// enemies conditional movement
+	for(int i = 0; i < enemies.size() ; i++){
+		float rndm = 40 + (rand() % (int)(180 - 40 + 1));
+		float vel= -enemies.at(i).getVelHelicoptero() * timeDifference;
+		if(onEnemy(enemies, i)){
+			enemies.at(i).setCollided(true);
+		}else{
+			enemies.at(i).setCollided(false);
+		}
+		if(!enemies.at(i).getCollided() && !onArena(enemies.at(i), arena.getArena(), vel)){
+			enemies.at(i).moveY(vel);
+		}else{
+			enemies.at(i).rotate(rndm);
+			enemies.at(i).moveY(vel);
+			enemies.at(i).setCollided(false);
+		}
 	}
 
 	glutPostRedisplay();
@@ -170,7 +171,6 @@ void timerEnemyShooting(int value){
 									enemies.at(i).getAngleGun()));
 	}
 	glutTimerFunc(2000,timerEnemyShooting,200);
-
 	glutPostRedisplay();
 }
 
@@ -204,9 +204,9 @@ int main(int argc, char* argv[]){
 	arena.readXMLArena((config.getArena().getPath() + config.getArena().getName() + "." + config.getArena().getExtension()).c_str());
 	player = config.readHelicopterConfig(path);
 	player.setArena(ARENAX, ARENAY);
-	enemies.push_back(config.readEnemyHelicopter(path));
-	enemies.push_back(config.readEnemyHelicopter(path));
-	enemies.push_back(config.readEnemyHelicopter(path));
+	enemies.push_back(config.readEnemyHelicopter(path, ARENAX/100 * 90, ARENAY/100 * 10));
+	enemies.push_back(config.readEnemyHelicopter(path, ARENAX/100 * 90, ARENAY/100 * 90));
+	enemies.push_back(config.readEnemyHelicopter(path, ARENAX/100 * 10, ARENAY/100 * 90));
 	enemies.at(0).setAngle(0);
 
 	glutInit 				(&argc, argv);

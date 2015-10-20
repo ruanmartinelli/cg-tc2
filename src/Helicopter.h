@@ -29,6 +29,7 @@ private:
 	float arenaX, arenaY; // arena size
 	int gas;
 	float radius;
+	bool collided;
 
 	Rect body;
 	Rect gun;
@@ -38,7 +39,7 @@ private:
 	float angleGun;
 public:
 	Helicopter();
-	Helicopter(float freqTiro, float velHelicoptero);
+	Helicopter(float freqTiro, float velHelicoptero, float cx, float cy);
 	Helicopter(float velTiro, float velHelicoptero, float tempoDeVoo);
 	void draw();
 	void drawEnemy();
@@ -69,5 +70,6 @@ public:
 	float getRadius();
 	float getGx(); float getNextMoveX(float val); float getCx();
 	float getGy(); float getNextMoveY(float val); float getCy();
+	void setCollided(bool value); bool getCollided();
 };
 #endif

@@ -19,7 +19,7 @@ class XMLConfig{
 		File getArena();
 		void readXML(const char* path);
 		Helicopter readHelicopterConfig(const char * path);
-		Helicopter readEnemyHelicopter(const char* path);
+		Helicopter readEnemyHelicopter(const char* path, float cx, float cy);
 };
 
 #endif

@@ -66,6 +66,24 @@ void setKeyDown(unsigned char key, int x, int j){
 	glutPostRedisplay();
 }
 
+bool onEnemy(vector<Helicopter> enemies, int i){
+	bool result = false;
+	for(int j = 0 ; j < enemies.size(); j++){
+		if(j != i){
+			if(checkCollision(enemies.at(i).getGunPosX(),
+							enemies.at(i).getGunPosY(),
+							enemies.at(i).getRadius(),
+							enemies.at(j).getGunPosX(),
+							enemies.at(j).getGunPosY(),
+							enemies.at(j).getRadius())){
+								return true;
+							}
+		}
+	}
+	return result;
+}
+
+
 bool onPosto(Helicopter player, Rect posto){
 	if(player.getGunPosX() > posto.getX()
 		&& player.getGunPosX() < (posto.getX() + posto.getWidth())
@@ -80,9 +98,13 @@ bool onPosto(Helicopter player, Rect posto){
 }
 
 bool checkCollision(float x, float y, float r, float a, float b, float c){
-	float dist = sqrt(pow(x - y, 2) + pow(a - b, 2));
+	float dist = sqrt(pow(x - a, 2) + pow(y - b, 2));
 	bool result;
-	dist <= (r + c) ? result = true : result = false;
+	if(dist <= (r + c)){
+		result = true;
+	}else{
+		result = false;
+	}
 	return result;
 }
 

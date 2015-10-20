@@ -13,20 +13,25 @@ Helicopter::Helicopter(){
 }
 
 // enemy
-Helicopter::Helicopter(float freqTiro, float velHelicoptero){
+Helicopter::Helicopter(float freqTiro, float velHelicoptero, float cx, float cy){
 	isEnemy 				= true;
-	this->velTiro = 0.2;
+	this->velTiro 			= 0.2;
 	this->freqTiro 			= freqTiro;
 	this->velHelicoptero 	= velHelicoptero;
 	gX 			= 0.0,
 	gY 			= 0.0;
-	cX 			= rand() % 800,
-	cY 			= rand() % 600;
+	radius 		= bodyWidth;
+	cX = cx;
+	cY = cy;
+	// cX 			= rand() % 800 - radius,
+	// cY 			= rand() % 600 - radius;
+	// cX = radius + (rand() % (int)(700 - radius + 1));
+	// cY = radius + (rand() % (int)(600 - radius + 1));
 	angle 		= rand() % 360;
 	// angle = 90;
 	flying 		= true;
 	velHelice 	= 10.0;
-	radius 		= bodyWidth;
+	this->collided = false;
 }
 
 // player
@@ -44,6 +49,7 @@ Helicopter::Helicopter(float velTiro, float velHelicoptero, float tempoDeVoo){
 	flying 		= false;
 	velHelice 	= 0.0;
 	radius 		= bodyWidth;
+	this->collided = false;
 }
 
 float Helicopter::getFreqTiro()			{return this->freqTiro;}
@@ -65,6 +71,8 @@ float Helicopter::getGx()				{return this->gX;};
 float Helicopter::getCx()				{return this->cX;};
 float Helicopter::getGy()				{return this->gY;};
 float Helicopter::getCy()				{return this->cY;};
+void Helicopter::setCollided(bool value){this->collided = value;};
+bool Helicopter::getCollided()			{return this->collided;};
 float Helicopter::getNextMoveX( float val ){
 	return this->gX + val * cos(( 90 + angle) * 3.1415/180.0);
 }

@@ -25,4 +25,6 @@ void setKeyDown(unsigned char key, int x, int j);
 bool checkDefeat(Helicopter player, float x, float y);
 bool onPosto(Helicopter player, Rect posto);
 bool onArena(Helicopter player, Rect arena, float displacement);
+bool checkCollision(float x, float y, float r, float a, float b, float c);
+bool onEnemy(vector<Helicopter> enemies, int i);
 #endif
