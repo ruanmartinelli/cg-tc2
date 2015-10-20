@@ -22,8 +22,8 @@ Helicopter::Helicopter(float freqTiro, float velHelicoptero){
 	gY 			= 0.0;
 	cX 			= rand() % 800,
 	cY 			= rand() % 600;
-	// angle 		= rand() % 360;
-	angle = 90;
+	angle 		= rand() % 360;
+	// angle = 90;
 	flying 		= true;
 	velHelice 	= 10.0;
 	radius 		= bodyWidth;

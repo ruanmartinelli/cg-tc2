@@ -160,12 +160,12 @@ void timerGasBar(int value){
 }
 
 void timerEnemyShooting(int value){
+
 	for(int i = 0 ; i < enemies.size() ; i++){
-		// TODO not shooting straight
 		enemyShots.push_back(Shot(enemies.at(i).getGunPosX(),
 									enemies.at(i).getGunPosY(),
-									enemies.at(i).getCurrentAngleGun(),
-									enemies.at(i).getAngle(),
+									fmod(enemies.at(i).getAngle(),360.0),
+									fmod(enemies.at(i).getAngle(),360.0),
 									enemies.at(i).getVelTiro(),
 									enemies.at(i).getAngleGun()));
 	}

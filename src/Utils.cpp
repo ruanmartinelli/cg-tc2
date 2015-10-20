@@ -89,7 +89,7 @@ bool checkCollision(float x, float y, float r, float a, float b, float c){
 bool onArena(Helicopter player, Rect arena, float displacement){
 	float nextMoveX = player.getNextMoveX(displacement) + player.getCx();
 	float nextMoveY = player.getNextMoveY(displacement) + player.getCy();
-	cout << nextMoveX << endl;
+
 	if(nextMoveX + player.getRadius() > arena.getWidth()
 		|| nextMoveX - player.getRadius() < 0.0
 		|| nextMoveY + player.getRadius() > arena.getHeight()
